@@ -1,4 +1,5 @@
 const app = require('../..');
+const helper = require("../helpers.js")
 
 describe('Task API Routes', function() {
 
@@ -8,8 +9,7 @@ describe('Task API Routes', function() {
           request.get('/users')
               .expect(200)
               .end(function(err, res) {
-                  expect(res.body).to.have.lengthOf(1);
-                  done(err);
+                done(err);
               });
       });
   });
@@ -55,7 +55,7 @@ describe('Task API Routes', function() {
   // Testing how to update a task expecting status 201 of success
   describe('PUT /users/:id', function() {
       it('updates a user', function(done) {
-          var user = app.db.get('users').first();
+          var user = app.db.get('users').first().value();
           request.put('/users/' + user.id)
               .send({
                 name: "Kevin",
@@ -67,13 +67,17 @@ describe('Task API Routes', function() {
                   done(err);
               });
       });
+      it('validate updated a user', function() {
+            var user = app.db.get('users').first().value();
+            //값을 판독
+      });
   });
 
   // Testing how to delete a task expecting status 201 of success
   describe('DELETE /users/:id', function() {
       it('removes a user', function(done) {
-          var user = app.db.get('users').first();
-          request.put('/users/' + user.id)
+          var user = app.db.get('users').first().value();
+          request.del('/users/' + user.id)
               .expect(200)
               .end(function(err, res) {
                   done(err);

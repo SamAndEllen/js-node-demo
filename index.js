@@ -9,6 +9,7 @@ app.use(express.json());
 
 const FileSync = require('lowdb/adapters/FileSync');
 
+//env TEST면 테스트 DB 파일로 연결
 const adapter = new FileSync('db.json');
 const db = lowdb(adapter);
 
